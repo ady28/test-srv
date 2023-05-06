@@ -101,8 +101,10 @@
           </select>
           <button v-on:click="checkServerRoleResources" class="btn" :class="{'btn-info': cheksrvr_btninfo, 'btn-success': cheksrvr_btnsuccess}" v-bind:disabled="checkServerRoleResourcesDisable" type="button" id="button-checkHVStorage"><span v-if="serverRoleBtnLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span v-else>Check Hyper-V storage</span></button>
         </div>
+        <label class="form-label">Enter a description for the virtual machine</label>
+        <input id="serverDescription" v-model="roleDescription" type="text" class="form-control mb-3" placeholder="Description" aria-label="Description">
         <label class="form-label">Select staging</label>
-        <select v-model="roleStaging" class="form-select mb-3" aria-label="Choose stagign">
+        <select v-model="roleStaging" class="form-select mb-3" aria-label="Choose staging">
           <option selected value="">Select staging</option>
           <option value="Prod">Prod</option>
           <option value="Test">Test</option>
@@ -112,6 +114,12 @@
           <option selected value="">Select backup class</option>
           <option value="Basic">Basic</option>
           <option value="Gold">Gold</option>
+        </select>
+        <label class="form-label">Select maintenance window</label>
+        <select v-model="roleMaintWindow" class="form-select mb-3" aria-label="Choose maintenance window">
+          <option selected value="">Select maintenance window</option>
+          <option value="03. 1st Sunday 10AM-1PM">03. 1st Sunday 10AM-1PM</option>
+          <option value="04. 2nd Sunday 10AM-1PM">04. 2nd Sunday 10AM-1PM</option>
         </select>
       </div>
     </div>
@@ -170,7 +178,9 @@ import 'vue3-form-wizard/dist/style.css'
                 cheksrvr_btninfo: true,
                 cheksrvr_btnsuccess: false,
                 roleStaging: "",
-                roleBackupClass: ""
+                roleBackupClass: "",
+                roleDescription: "",
+                roleMaintWindow: ""
             }
         },
         methods: {
@@ -193,7 +203,7 @@ import 'vue3-form-wizard/dist/style.css'
                 return true;
             },
             beforeTab4Switch() {
-                if(!this.serverRoleOK || this.roleStaging == "" || this.roleBackupClass == "" ) {
+                if(!this.serverRoleOK || this.roleStaging == "" || this.roleBackupClass == "" || this.roleMaintWindow == "" || this.roleDescription == "" ) {
                     return false
                 }
                 return true;
